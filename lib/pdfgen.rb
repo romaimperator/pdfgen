@@ -14,8 +14,11 @@ class Pdfgen
   end
 
   def to_pdf(opts = {})
-    stdin_data = {opts: opts, html: @html}
-    pdf_output, status = Open3.capture2(MAKE_PDF_COMMAND, stdin_data: stdin_data.to_json)
+    file = Tempfile.new('input_html')
+    file.write(@html)
+    file.close
+    pdf_output, status = Open3.capture2(MAKE_PDF_COMMAND, file.path, stdin_data: opts.to_json)
+    file.unlink
     unless status.success?
       raise 'There was an unknown error running node to create the pdf. Check your logs for output that might assist in debugging.'
     end
