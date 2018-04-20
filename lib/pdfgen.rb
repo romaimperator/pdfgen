@@ -13,6 +13,7 @@ class Pdfgen
     @html = html
     @viewport_options = nil
     @emulate_media = nil
+    @launch_options = nil
   end
 
   def set_viewport(viewport_options)
@@ -25,10 +26,16 @@ class Pdfgen
     self
   end
 
+  def launch_options(launch_options)
+    @launch_options = launch_options
+    self
+  end
+
   def to_pdf(opts = {})
     stdin_options = { pdf_options: opts, current_path: Dir.pwd }
     stdin_options = stdin_options.merge(viewport_options: @viewport_options) if @viewport_options
     stdin_options = stdin_options.merge(emulate_media: @emulate_media) if @emulate_media
+    stdin_options = stdin_options.merge(launch_options: @launch_options) if @launch_options
     file = Tempfile.new('input_html')
     file.write(@html)
     file.close
