@@ -42,6 +42,7 @@ class Pdfgen
     stdin_options = { pdf_options: opts, current_path: Dir.pwd, launch_options: @launch_options }
     stdin_options = stdin_options.merge(viewport_options: @viewport_options) if @viewport_options
     stdin_options = stdin_options.merge(emulate_media: @emulate_media) if @emulate_media
+    stdin_options = stdin_options.merge(wait_for_timeout: @wait_for_timeout) if @wait_for_timeout
     file = Tempfile.new('input_html')
     file.write(@html)
     file.close
