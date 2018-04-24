@@ -14,6 +14,7 @@ class Pdfgen
     @viewport_options = nil
     @emulate_media = nil
     @launch_options = Hash.new
+    @wait_for_timeout = nil
   end
 
   def set_viewport(viewport_options)
@@ -28,6 +29,12 @@ class Pdfgen
 
   def launch_options(launch_options)
     @launch_options = launch_options
+    self
+  end
+
+  def wait_for_timeout(wait_for_timeout)
+    raise TypeError.new("Timeout must be an integer or respond to #to_i") unless wait_for_timeout.kind_of?(Integer) || (wait_for_timeout.respond_to?(:to_i) && wait_for_timeout.to_i)
+    @wait_for_timeout = wait_for_timeout
     self
   end
 
