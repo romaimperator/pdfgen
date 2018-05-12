@@ -49,8 +49,7 @@ Sets a couple of options so the browser window used to print the PDF can be seen
 the amount of time in milliseconds to leave the browser window open before the PDF will be printed and the browser
 closed. It also disables headless mode.
 
-Example:
-Turns on debug mode and waits for 5 minutes.
+Example: Turns on debug mode and waits for 5 minutes.
 ```ruby
 Pdfgen.new(html).debug_mode(300_000).to_pdf
 ```
@@ -60,8 +59,7 @@ Pdfgen.new(html).debug_mode(300_000).to_pdf
 Configure the media type for the browser used to render the PDF. Media type can be `'screen'`, `'print'`, or `null`.
 See [emulateMedia](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pageemulatemediamediatype) for more info.
 
-Example:
-Set the media emulation type to print.
+Example: Set the media emulation type to print.
 ```ruby
 Pdfgen.new(html).emulate_media('print').to_pdf
 ```
@@ -72,8 +70,7 @@ Configure the options used to launch the browser. Can be used to set extra args 
 disable headless mode. *launch_options* is a hash that is passed directly to the [launch](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
 Puppeteer method and as such takes the same arguments.
 
-Example:
-Adds '--no-sandbox' flag and turns off headless mode.
+Example: Adds '--no-sandbox' flag and turns off headless mode.
 ```ruby
 Pdfgen.new(html).launch_options(args: ['--no-sandbox'], headless: false).to_pdf
 ```
@@ -84,8 +81,7 @@ Configure the viewport. *viewport_options* is a hash that is passed directly to 
 [setViewport](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetviewportviewport)
 Puppeteer method and as such takes the same arguments.
 
-Example:
-Sets the viewport width and height to 1024x768.
+Example: Sets the viewport width and height to 1024x768.
 ```ruby
 Pdfgen.new(html).set_viewport(width: 1024, height: 768).to_pdf
 ```
@@ -95,8 +91,7 @@ Pdfgen.new(html).set_viewport(width: 1024, height: 768).to_pdf
 Configure an optional timeout to wait for with the browser loaded before the PDF will be saved specified in
 milliseconds. Used to allow the page to finish rendering if the default prints the PDF to fast.
 
-Example:
-Sets the wait timeout to 1.5 seconds.
+Example: Sets the wait timeout to 1.5 seconds.
 ```ruby
 Pdfgen.new(html).wait_for_timeout(1500).to_pdf
 ```
@@ -109,11 +104,18 @@ Configure the options for making the PDF. It allows for setting margins, a scale
 the paper type, and more. *opts* is a hash that is passed directly to the [pdf](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions)
 Puppeteer method and as such takes the same arguments.
 
-Example:
-Configures the margins to be 1 inch all around.
+Example: Configures the margins to be 1 inch all around.
 ```ruby
 Pdfgen.new(html).to_pdf(margin: {top: '1in', right: '1in', bottom: '1in', left: '1in'})
 ```
+
+# Limitations
+
+* It only works with inline Javascript, CSS, and images.
+
+  Currently, there is a limitation that requires inline assets. This is because the setContent method in Puppeteer does not load links to
+  assets. There is a workaround possible since Puppeteer allows adding script tags and style tags and those methods do take URLs but Pdfgen
+  does not yet support them.
 
 # Future Development
 In the future, allowing use of more features of Puppeteer is desired. These include taking a URL and
