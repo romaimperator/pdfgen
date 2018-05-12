@@ -1,4 +1,11 @@
-* Adds a debug mode
+## Pdfgen 0.4.0 (May 12, 2018)
+
+* Can now provide a URL to the initializer.
+
+  Providing a URL to the initializer will now nagivate to the URL and then render the
+  page to a PDF.
+
+* Adds a debug mode.
 
   Calling debug_mode and passing in a time in milliseconds to wait with the browser
   not headless. This may change to be forever in the future but that would cause weird

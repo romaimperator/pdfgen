@@ -41,6 +41,13 @@ Example:
 Pdfgen.new(html).set_viewport(width: 1024, height: 768).wait_for_timeout(1000).emulate_media('screen').to_pdf(format: 'Letter')
 ```
 
+## Initialize
+
+### new(html_or_url)
+
+Takes a string of HTML to put into the page or a URL to nagivate to. If it is a URL, extra options for the navigation can be
+provided with [`url_options`](#url_optionsurl_options). If a string of HTML, the assets must be inlined to work. See [Limitations](#limitations)
+
 ## Chainable configuration methods
 
 ### debug_mode(debug_time)
@@ -84,6 +91,18 @@ Puppeteer method and as such takes the same arguments.
 Example: Sets the viewport width and height to 1024x768.
 ```ruby
 Pdfgen.new(html).set_viewport(width: 1024, height: 768).to_pdf
+```
+
+### url_options(url_options)
+
+When using a URL, this configures the navigation options. It is mainly used to configure what to wait for. *url_options* is
+a hash that is passed directly as the second argument to [goto](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options)
+Puppeteer method and as such takes the same arguments. Defaults to `waitUntil: 'networkidle0'` which will wait until there are
+0 active network connections in the past 500 milliseconds.
+
+Example:
+```ruby
+Pdfgen.new('https://www.google.com').url_options(waitUntil: 'networkidle0').to_pdf
 ```
 
 ### wait_for_timeout(wait_for_timeout)

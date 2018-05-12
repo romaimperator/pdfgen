@@ -9,13 +9,20 @@ raise 'This gem requires node be installed and available on the PATH' unless sta
 MAKE_PDF_COMMAND = File.expand_path('../javascript_bin/make_pdf.js', __FILE__)
 
 class Pdfgen
-  def initialize(html)
-    @html = html
+  def initialize(html_or_url)
+    if html_or_url =~ /^http/
+      @url = html_or_url
+      @html = nil
+    else
+      @url = nil
+      @html = html_or_url
+    end
     @viewport_options = nil
     @emulate_media = nil
     @launch_options = Hash.new
     @wait_for_timeout = nil
     @debug_time = nil
+    @url_options = { waitUntil: 'networkidle0' }
   end
 
   def set_viewport(viewport_options)
@@ -45,6 +52,11 @@ class Pdfgen
     self
   end
 
+  def url_options(url_options)
+    @url_options = @url_options.merge(url_options)
+    self
+  end
+
   def to_pdf(opts = {})
     stdin_options = { pdf_options: opts, current_path: Dir.pwd }
     stdin_options = stdin_options.merge(viewport_options: @viewport_options) if @viewport_options
@@ -53,12 +65,23 @@ class Pdfgen
     if @debug_time
       stdin_options = stdin_options.merge(wait_for_timeout: @debug_time)
       stdin_options = stdin_options.merge(launch_options: @launch_options.merge(headless: false))
+      stdin_options = stdin_options.merge(debug_mode: true)
     end
-    file = Tempfile.new('input_html')
-    file.write(@html)
-    file.close
-    pdf_output, status = Open3.capture2(MAKE_PDF_COMMAND, file.path, stdin_data: stdin_options.to_json)
-    file.unlink
+
+    pdf_output = nil
+    status = nil
+    if @html
+      file = Tempfile.new('input_html')
+      file.write(@html)
+      file.close
+      pdf_output, status = Open3.capture2(MAKE_PDF_COMMAND, file.path, stdin_data: stdin_options.to_json)
+      file.unlink
+    else
+      stdin_options = stdin_options.merge(url: @url)
+      stdin_options = stdin_options.merge(url_options: @url_options)
+      pdf_output, status = Open3.capture2(MAKE_PDF_COMMAND, stdin_data: stdin_options.to_json)
+    end
+
     unless status.success?
       raise 'There was an unknown error running node to create the pdf. Check your logs for output that might assist in debugging.'
     end
