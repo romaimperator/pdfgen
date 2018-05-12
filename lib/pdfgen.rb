@@ -15,6 +15,7 @@ class Pdfgen
     @emulate_media = nil
     @launch_options = Hash.new
     @wait_for_timeout = nil
+    @debug_time = nil
   end
 
   def set_viewport(viewport_options)
@@ -38,11 +39,21 @@ class Pdfgen
     self
   end
 
+  def debug_mode(debug_time)
+    raise TypeError.new("Timeout must be an integer or respond to #to_i") unless debug_time.kind_of?(Integer) || (debug_time.respond_to?(:to_i) && debug_time.to_i)
+    @debug_time = debug_time
+    self
+  end
+
   def to_pdf(opts = {})
-    stdin_options = { pdf_options: opts, current_path: Dir.pwd, launch_options: @launch_options }
+    stdin_options = { pdf_options: opts, current_path: Dir.pwd }
     stdin_options = stdin_options.merge(viewport_options: @viewport_options) if @viewport_options
     stdin_options = stdin_options.merge(emulate_media: @emulate_media) if @emulate_media
     stdin_options = stdin_options.merge(wait_for_timeout: @wait_for_timeout) if @wait_for_timeout
+    if @debug_time
+      stdin_options = stdin_options.merge(wait_for_timeout: @debug_time)
+      stdin_options = stdin_options.merge(launch_options: @launch_options.merge(headless: false))
+    end
     file = Tempfile.new('input_html')
     file.write(@html)
     file.close
