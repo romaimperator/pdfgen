@@ -111,7 +111,7 @@ Pdfgen.new(html).to_pdf(margin: {top: '1in', right: '1in', bottom: '1in', left: 
 
 # Limitations
 
-* It only works with inline Javascript, CSS, and images.
+#### It only works with inline Javascript, CSS, and images.
 
   Currently, there is a limitation that requires inline assets. This is because the setContent method in Puppeteer does not load links to
   assets. There is a workaround possible since Puppeteer allows adding script tags and style tags and those methods do take URLs but Pdfgen
