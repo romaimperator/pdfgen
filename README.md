@@ -41,16 +41,18 @@ Example:
 Pdfgen.new(html).set_viewport(width: 1024, height: 768).wait_for_timeout(1000).emulate_media('screen').to_pdf(format: 'Letter')
 ```
 
-### set_viewport(viewport_options)
+## Chainable configuration methods
 
-Configure the viewport. *viewport_options* is a hash that is passed directly to the
-[setViewport](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetviewportviewport)
-Puppeteer method and as such takes the same arguments.
+### debug_mode(debug_time)
+
+Sets a couple of options so the browser window used to print the PDF can be seen and inspected. *debug_time* is
+the amount of time in milliseconds to leave the browser window open before the PDF will be printed and the browser
+closed. It also disables headless mode.
 
 Example:
-Sets the viewport width and height to 1024x768.
+Turns on debug mode and waits for 5 minutes.
 ```ruby
-Pdfgen.new(html).set_viewport(width: 1024, height: 768).to_pdf
+Pdfgen.new(html).debug_mode(300_000).to_pdf
 ```
 
 ### emulate_media(media_type)
@@ -76,6 +78,18 @@ Adds '--no-sandbox' flag and turns off headless mode.
 Pdfgen.new(html).launch_options(args: ['--no-sandbox'], headless: false).to_pdf
 ```
 
+### set_viewport(viewport_options)
+
+Configure the viewport. *viewport_options* is a hash that is passed directly to the
+[setViewport](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetviewportviewport)
+Puppeteer method and as such takes the same arguments.
+
+Example:
+Sets the viewport width and height to 1024x768.
+```ruby
+Pdfgen.new(html).set_viewport(width: 1024, height: 768).to_pdf
+```
+
 ### wait_for_timeout(wait_for_timeout)
 
 Configure an optional timeout to wait for with the browser loaded before the PDF will be saved specified in
@@ -87,17 +101,7 @@ Sets the wait timeout to 1.5 seconds.
 Pdfgen.new(html).wait_for_timeout(1500).to_pdf
 ```
 
-### debug_mode(debug_time)
-
-Sets a couple of options so the browser window used to print the PDF can be seen and inspected. *debug_time* is
-the amount of time in milliseconds to leave the browser window open before the PDF will be printed and the browser
-closed. It also disables headless mode.
-
-Example:
-Turns on debug mode and waits for 5 minutes.
-```ruby
-Pdfgen.new(html).debug_mode(300_000).to_pdf
-```
+## PDF rendering methods
 
 ### to_pdf(opts)
 
