@@ -1,3 +1,7 @@
+## Pdfgen 0.4.1 (May 15, 2018)
+
+* Fixes bug with regex that checks if a URL was passed.
+
 ## Pdfgen 0.4.0 (May 12, 2018)
 
 * Can now provide a URL to the initializer.

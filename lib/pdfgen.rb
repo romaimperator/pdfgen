@@ -10,7 +10,7 @@ MAKE_PDF_COMMAND = File.expand_path('../javascript_bin/make_pdf.js', __FILE__)
 
 class Pdfgen
   def initialize(html_or_url)
-    if html_or_url =~ /^http/
+    if html_or_url =~ /\Ahttp/
       @url = html_or_url
       @html = nil
     else
