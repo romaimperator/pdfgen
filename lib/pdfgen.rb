@@ -66,6 +66,8 @@ class Pdfgen
       stdin_options = stdin_options.merge(wait_for_timeout: @debug_time)
       stdin_options = stdin_options.merge(launch_options: @launch_options.merge(headless: false))
       stdin_options = stdin_options.merge(debug_mode: true)
+    else
+      stdin_options = stdin_options.merge(launch_options: @launch_options)
     end
 
     pdf_output = nil

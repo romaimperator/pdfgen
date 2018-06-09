@@ -1,3 +1,5 @@
+* Fixes bug where launch options were no longer being passed to the Javascript.
+
 ## Pdfgen 0.4.1 (May 15, 2018)
 
 * Fixes bug with regex that checks if a URL was passed.
