@@ -3,8 +3,11 @@
 require 'open3'
 require 'json'
 
-_, status = Open3.capture2('node', '-v')
-raise 'This gem requires node be installed and available on the PATH' unless status.success?
+MIN_REQUIRED_NODE_VERSION = '7.6'
+
+node_version, status = Open3.capture2('node', '-v')
+raise 'This gem requires Node be installed and available on the PATH' unless status.success?
+raise "This gem requires Node v#{MIN_REQUIRED_NODE_VERSION} or greater but found Node #{node_version}" unless Gem::Version.new(node_version[1..-1]) > Gem::Version.new(MIN_REQUIRED_NODE_VERSION)
 
 MAKE_PDF_COMMAND = File.expand_path('../javascript_bin/make_pdf.js', __FILE__)
 

@@ -5,7 +5,7 @@ version = File.read(File.expand_path("VERSION", __dir__)).strip
 Gem::Specification.new do |s|
   s.name        = 'pdfgen'
   s.version     = version
-  s.date        = '2018-05-15'
+  s.date        = '2018-06-08'
   s.summary     = "Generate PDFs using Puppeteer and headless Chrome"
   s.description = "Using Puppeteer and headless Chrome, generate PDFs from HTML without needing to install wkhtmltopdf."
   s.authors     = ["Daniel Fox"]

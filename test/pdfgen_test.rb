@@ -19,4 +19,8 @@ class PdfgenTest < Minitest::Test
   def test_debug_mode
     assert_kind_of String, Pdfgen.new('https://www.google.com').debug_mode(500).to_pdf
   end
+
+  def test_html_that_contains_link_at_beginning_of_a_line
+    assert_kind_of String, Pdfgen.new("<html><body><h1>howdy</h1><p>\nhttp://this-is-a-link.example.com</p></body></html>").to_pdf
+  end
 end

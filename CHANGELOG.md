@@ -1,3 +1,15 @@
+## Pdfgen 0.4.2 (June 8, 2018)
+
+* Adds checking of minimum Node version required.
+
+  Need to soon add testing for different versions of Node to discover what the
+  compatible versions are.
+
+* Adds handling of any unhandled rejection by logging the error and then exiting.
+
+  This change provides better error messaged from Node and also prevents the process
+  from hanging and not exiting when there was an error.
+
 * Fixes bug where launch options were no longer being passed to the Javascript.
 
 ## Pdfgen 0.4.1 (May 15, 2018)

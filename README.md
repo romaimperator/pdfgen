@@ -2,7 +2,9 @@
 A tool for creating PDFs using [Puppeteer](https://github.com/GoogleChrome/puppeteer) and headless Chrome.
 
 # Dependencies
-This gem requires that node be installed along with puppeteer.
+This gem requires:
+* Node v7.6 or greater
+* Puppeteer (tested with v1.3.0)
 
 ### OSX (Homebrew)
 To install node on OSX you can use Homebrew:
