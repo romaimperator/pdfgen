@@ -1,3 +1,24 @@
+## Pdfgen 0.5.0 (September 3, 2018)
+
+* Changes how the wait for timeout works slightly.
+
+  This new way starts the wait prior to putting the HTML in the page. Now that we can
+  utilize the waitUntil navigation feature in Puppeteer, we might as well start the
+  clock before waiting for that amount of time. This way, the maximum wait time should
+  be roughly the timeout instead of the timeout + how long the page takes to load.
+
+* Changes how static HTML is put into the page.
+
+  This new method allows us to use the navigation wait helpers so there should be
+  almost no need for timeout waiting if passing Pdfgen HTML instead of a URL.
+
+  Sadly, this still does not load assets on the page so inlining your assets is still
+  required.
+
+* Moves emulateMedia and setViewport steps to be before setting content or navigation
+  so that the browser won't need to rerender the content and hopefully we improve
+  performance some.
+
 ## Pdfgen 0.4.2 (June 8, 2018)
 
 * Adds checking of minimum Node version required.
