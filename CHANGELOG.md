@@ -1,3 +1,9 @@
+## Pdfgen 0.6.0 (June 14, 2019)
+
+* Use capture3 to also capture stderror which is where Node error messages are output.
+
+  This allows Pdfgen to include the error from Node in the exception that is raised.
+
 ## Pdfgen 0.5.0 (September 3, 2018)
 
 * Changes how the wait for timeout works slightly.

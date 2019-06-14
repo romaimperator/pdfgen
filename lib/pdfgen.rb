@@ -74,21 +74,22 @@ class Pdfgen
     end
 
     pdf_output = nil
+    error_output = nil
     status = nil
     if @html
       file = Tempfile.new('input_html')
       file.write(@html)
       file.close
-      pdf_output, status = Open3.capture2(MAKE_PDF_COMMAND, file.path, stdin_data: stdin_options.to_json)
+      pdf_output, error_output, status = Open3.capture3(MAKE_PDF_COMMAND, file.path, stdin_data: stdin_options.to_json)
       file.unlink
     else
       stdin_options = stdin_options.merge(url: @url)
       stdin_options = stdin_options.merge(url_options: @url_options)
-      pdf_output, status = Open3.capture2(MAKE_PDF_COMMAND, stdin_data: stdin_options.to_json)
+      pdf_output, error_output, status = Open3.capture3(MAKE_PDF_COMMAND, stdin_data: stdin_options.to_json)
     end
 
     unless status.success?
-      raise 'There was an unknown error running node to create the pdf. Check your logs for output that might assist in debugging.'
+      raise "This error was encountered running node to create the pdf: #{error_output}"
     end
     unless pdf_output
       raise 'There was an error creating the temporary file used to pass the HTML to node.'
