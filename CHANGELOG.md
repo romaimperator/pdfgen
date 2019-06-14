@@ -1,3 +1,12 @@
+## Pdfgen 0.7.0 (June 14, 2019)
+
+* Revert to using setContent but require Puppeteer >= 1.11.0.
+
+  This version of Puppeteer added support to setContent for waiting until browser
+  events fire. The original reason for transitioning away from setContent was lack
+  of that feature and navigating to a data URL is limited to a maximum of 2 megabytes
+  of HTML as that is Chromium's URL length limit.
+
 ## Pdfgen 0.6.0 (June 14, 2019)
 
 * Use capture3 to also capture stderror which is where Node error messages are output.
