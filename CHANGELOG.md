@@ -1,3 +1,10 @@
+## Pdfgen 0.8.0 (December 17, 2019)
+
+* Allow using a `file://` path as a URL for PDFs
+
+  This was submitted by https://github.com/maokomioko in
+  https://github.com/romaimperator/pdfgen/pull/1. Thanks for your contribution!
+
 ## Pdfgen 0.7.0 (June 14, 2019)
 
 * Revert to using setContent but require Puppeteer >= 1.11.0.
