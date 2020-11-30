@@ -1,3 +1,10 @@
+## Pdfgen 0.8.1 (November 30, 2020)
+
+* Handle deprecation of emulateMedia function.
+
+  This was submitted by https://github.com/maokomioko in
+  https://github.com/romaimperator/pdfgen/pull/2. Thanks for your contribution!
+
 ## Pdfgen 0.8.0 (December 17, 2019)
 
 * Allow using a `file://` path as a URL for PDFs
